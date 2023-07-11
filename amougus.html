@@ -12,38 +12,24 @@
             height: 100vh;
         }
     </style>
-    <script>
-        function getCookieValue(name) {
-            const cookies = document.cookie.split(';');
-            for (let i = 0; i < cookies.length; i++) {
-                const cookie = cookies[i].trim();
-                if (cookie.startsWith(name + '=')) {
-                    return cookie.substring(name.length + 1);
-                }
-            }
-            return null;
-        }
-
-        function setCookieValue(name, value) {
-            document.cookie = name + '=' + value + ';path=/';
-        }
-
-        let count = getCookieValue('clickCount') || 0;
-
-        function incrementCounter() {
-            count++;
-            document.getElementById('counter').innerText = count;
-            setCookieValue('clickCount', count);
-        }
-    </script>
 </head>
 <body>
     <h1>The Button</h1>
-    <button onclick="window.location.href='https://grabify.link/6J78TZ'; incrementCounter()">Click Me</button>
-    <p>Clicked: <span id="counter"></span> times</p>
+    <button onclick="window.location.href='https://grabify.link/6J78TZ'">Click Me</button>
+    <p>Clicked: <input type="number" id="counter" value="0" min="0" readonly></p>
+
+    <datalist id="achievementList">
+        <option value="Achievement unlocked - Why are you still here?" data-value="25"></option>
+    </datalist>
 
     <script>
-        document.getElementById('counter').innerText = count;
+        document.getElementById('counter').addEventListener('input', function() {
+            const counter = parseInt(this.value);
+            const achievementOption = document.querySelector('#achievementList option[data-value="' + counter + '"]');
+            if (achievementOption) {
+                alert(achievementOption.value);
+            }
+        });
     </script>
 </body>
 </html>
