@@ -40,27 +40,12 @@
     #waiting-message {
       display: none;
       text-align: center;
-      font-size: 20px;
-      color: blue;
-    }
-
-    @keyframes rainbow {
-      0% { background-color: red; }
-      14% { background-color: orange; }
-      28% { background-color: yellow; }
-      42% { background-color: green; }
-      57% { background-color: blue; }
-      71% { background-color: indigo; }
-      85% { background-color: violet; }
-      100% { background-color: red; }
+      font-size: 18px;
     }
   </style>
   <script>
     var clickCount = 0;
-    var isWaiting = false;
-    var waitingTimeout;
-    var isFirstClick = true;
-    var clickTimeout;
+    var waitingTimer = null;
 
     // Function to display messages every 10 seconds
     function displayMessages() {
@@ -78,26 +63,26 @@
         "WHY WON'T YOU CLICK IT",
         "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
       ];
-
+      
       var messageIndex = 0;
       var showingInitialMessages = true;
 
       // Display messages every 10 seconds
-      var messageInterval = setInterval(function() {
+      setInterval(function() {
         // Check if the button is clicked
         if (!document.getElementById('button').clicked) {
           // Check if it's been 1 minute and switch to replacement messages
           if (messageIndex === initialMessages.length) {
             showingInitialMessages = false;
           }
-
+          
           // Display the appropriate message
           var message = showingInitialMessages ? initialMessages[messageIndex] : replacementMessages[messageIndex - initialMessages.length];
           document.getElementById('message').textContent = message;
 
           // Increment the message index
           messageIndex++;
-
+          
           // Clear the message after 5 seconds
           setTimeout(function() {
             document.getElementById('message').textContent = "";
@@ -106,13 +91,6 @@
           // Show the counter and hide the message section
           document.getElementById('counter').style.display = "inline";
           document.getElementById('message').style.display = "none";
-
-          // Reset waiting state
-          if (isWaiting) {
-            clearTimeout(waitingTimeout);
-            isWaiting = false;
-            document.getElementById('waiting-message').style.display = "none";
-          }
         }
       }, 10000); // 10 seconds
     }
@@ -121,46 +99,36 @@
     function handleClick() {
       clickCount++;
       document.getElementById('counter').textContent = clickCount;
-
+      
       // Show the counter immediately after the button is clicked
       document.getElementById('counter').style.display = "inline";
       document.getElementById('message').style.display = "none";
 
       // Check if it's the first click
-      if (isFirstClick) {
-        isFirstClick = false;
+      if (clickCount === 1) {
         // Apply achievement effect
-        document.body.style.animation = "rainbow 3s infinite";
-
-        // Wait for 3 seconds and then display the achievement message
+        document.body.style.backgroundImage = "linear-gradient(to right, red, orange, yellow, green, blue, indigo, violet)";
         setTimeout(function() {
-          // Clear the animation
-          document.body.style.animation = "";
+          document.body.style.backgroundImage = "";
 
           // Display achievement message
-          alert("Achievement Unlocked! - You clicked!");
+          document.getElementById('achievement-text').style.display = "block";
+          
+          // Start waiting timer
+          waitingTimer = setTimeout(function() {
+            document.getElementById('waiting-message').textContent = "...";
+            document.getElementById('waiting-message').style.display = "block";
+            setTimeout(function() {
+              document.getElementById('waiting-message').textContent = "What now?";
+            }, 2000); // 2 seconds
+          }, 2000); // 2 seconds
         }, 3000); // 3 seconds
-      }
-
-      // Check if waiting state should be triggered
-      if (!isWaiting) {
-        clearTimeout(clickTimeout);
-        clickTimeout = setTimeout(function() {
-          isWaiting = true;
-          document.getElementById('waiting-message').textContent = "...";
-          document.getElementById('waiting-message').style.display = "block";
-          setTimeout(function() {
-            document.getElementById('waiting-message').textContent = "What now?";
-          }, 2000); // 2 seconds
-        }, 2000); // 2 seconds
       } else {
-        clearTimeout(waitingTimeout);
-        waitingTimeout = setTimeout(function() {
-          document.getElementById('waiting-message').textContent = "...";
-          setTimeout(function() {
-            document.getElementById('waiting-message').textContent = "What now?";
-          }, 2000); // 2 seconds
-        }, 2000); // 2 seconds
+        // If waiting timer is active, clear it
+        if (waitingTimer !== null) {
+          clearTimeout(waitingTimer);
+          waitingTimer = null;
+        }
       }
     }
   </script>
@@ -173,8 +141,8 @@
       <div id="counter">0</div>
     </div>
     <div id="message"></div>
-    <div id="achievement-text">Achievement Unlocked! - You clicked!</div>
-    <div id="waiting-message"></div>
   </div>
+  <div id="achievement-text">Achievement Unlocked! - You clicked!</div>
+  <div id="waiting-message"></div>
 </body>
 </html>
