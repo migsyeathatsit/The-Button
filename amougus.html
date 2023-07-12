@@ -84,6 +84,14 @@
       var clickCount = parseInt(document.getElementById('counter').textContent);
       clickCount++;
       document.getElementById('counter').textContent = clickCount;
+
+      // Check if the counter is 69 and display "Nice"
+      if (clickCount === 69) {
+        document.getElementById('message').textContent = "Nice";
+        setTimeout(function() {
+          document.getElementById('message').textContent = "";
+        }, 5000); // 5 seconds
+      }
       
       // Show the counter immediately after the button is clicked
       document.getElementById('counter').style.display = "inline";
