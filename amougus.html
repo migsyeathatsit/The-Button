@@ -16,8 +16,7 @@
 
     #message {
       text-align: center;
-      font-size: 48px;
-      margin-bottom: 20px;
+      margin-top: 10px;
     }
 
     #button-container {
@@ -85,14 +84,6 @@
       var clickCount = parseInt(document.getElementById('counter').textContent);
       clickCount++;
       document.getElementById('counter').textContent = clickCount;
-
-      // Check if the counter is 69 and display "Nice"
-      if (clickCount === 69) {
-        document.getElementById('message').textContent = "Nice";
-        setTimeout(function() {
-          document.getElementById('message').textContent = "";
-        }, 5000); // 5 seconds
-      }
       
       // Show the counter immediately after the button is clicked
       document.getElementById('counter').style.display = "inline";
@@ -102,12 +93,12 @@
 </head>
 <body onload="displayMessages()">
   <div>
-    <div id="message"></div>
+    <h1>The Button</h1>
     <div id="button-container">
       <button id="button" onclick="this.clicked = true; handleClick()">Click me</button>
       <div id="counter">0</div>
     </div>
-    <h1>The Button</h1>
+    <div id="message"></div>
   </div>
 </body>
 </html>
