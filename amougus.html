@@ -22,12 +22,13 @@
     #button-container {
       display: flex;
       justify-content: center;
+      align-items: center;
     }
 
     #counter {
       display: none;
-      text-align: center;
-      margin-top: 10px;
+      margin-left: 10px;
+      font-weight: bold;
     }
   </style>
   <script>
@@ -73,7 +74,7 @@
           }, 5000); // 5 seconds
         } else {
           // Show the counter and hide the message section
-          document.getElementById('counter').style.display = "block";
+          document.getElementById('counter').style.display = "inline";
           document.getElementById('message').style.display = "none";
         }
       }, 10000); // 10 seconds
@@ -92,9 +93,9 @@
     <h1>The Button</h1>
     <div id="button-container">
       <button id="button" onclick="this.clicked = true; handleClick()">Click me</button>
+      <div id="counter">0</div>
     </div>
     <div id="message"></div>
-    <div id="counter">0</div>
   </div>
 </body>
 </html>
