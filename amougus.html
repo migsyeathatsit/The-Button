@@ -22,7 +22,6 @@
     #button-container {
       display: flex;
       justify-content: center;
-      align-items: center;
     }
 
     #counter {
@@ -85,6 +84,10 @@
       var clickCount = parseInt(document.getElementById('counter').textContent);
       clickCount++;
       document.getElementById('counter').textContent = clickCount;
+      
+      // Show the counter immediately after the button is clicked
+      document.getElementById('counter').style.display = "inline";
+      document.getElementById('message').style.display = "none";
     }
   </script>
 </head>
