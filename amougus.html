@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Button Redirect</title>
+    <title>Button Click Counter</title>
     <style>
         /* Center the button, text, and counter */
         body {
@@ -15,7 +15,7 @@
 </head>
 <body>
     <h1>The Button</h1>
-    <button onclick="window.location.href='https://grabify.link/6J78TZ'">Click Me</button>
+    <button onclick="incrementCounter()">Click Me</button>
     <p>Clicked: <input type="number" id="counter" value="0" min="0" readonly></p>
 
     <datalist id="achievementList">
@@ -23,13 +23,19 @@
     </datalist>
 
     <script>
-        document.getElementById('counter').addEventListener('input', function() {
-            const counter = parseInt(this.value);
-            const achievementOption = document.querySelector('#achievementList option[data-value="' + counter + '"]');
+        let count = parseInt(localStorage.getItem('clickCount')) || 0;
+        document.getElementById('counter').value = count;
+
+        function incrementCounter() {
+            count++;
+            document.getElementById('counter').value = count;
+            localStorage.setItem('clickCount', count.toString());
+
+            const achievementOption = document.querySelector('#achievementList option[data-value="' + count + '"]');
             if (achievementOption) {
                 alert(achievementOption.value);
             }
-        });
+        }
     </script>
 </body>
 </html>
