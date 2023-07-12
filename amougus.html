@@ -38,27 +38,11 @@
     }
   </style>
   <script>
+    // Variables
     var clickCount = 0;
-    var clickTimeout;
+    var buttonClicked = false;
     var waitingState = false;
-
-    // Function to apply rainbow effect to background
-    function applyRainbowEffect() {
-      var colors = ["red", "orange", "yellow", "green", "blue", "indigo", "violet"];
-      var index = 0;
-
-      var interval = setInterval(function() {
-        document.body.style.backgroundColor = colors[index];
-        index = (index + 1) % colors.length;
-      }, 500); // Change color every 0.5 seconds
-
-      // Stop the rainbow effect after 3 seconds
-      setTimeout(function() {
-        clearInterval(interval);
-        document.body.style.backgroundColor = ""; // Reset to default background color
-        alert("Achievement Unlocked! - You clicked!"); // Display alert message
-      }, 3000);
-    }
+    var waitingTimeout;
 
     // Function to display messages every 10 seconds
     function displayMessages() {
@@ -76,26 +60,26 @@
         "WHY WON'T YOU CLICK IT",
         "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
       ];
-
+      
       var messageIndex = 0;
       var showingInitialMessages = true;
 
       // Display messages every 10 seconds
       var messageInterval = setInterval(function() {
         // Check if the button is clicked
-        if (!document.getElementById('button').clicked) {
+        if (!buttonClicked) {
           // Check if it's been 1 minute and switch to replacement messages
           if (messageIndex === initialMessages.length) {
             showingInitialMessages = false;
           }
-
+          
           // Display the appropriate message
           var message = showingInitialMessages ? initialMessages[messageIndex] : replacementMessages[messageIndex - initialMessages.length];
           document.getElementById('message').textContent = message;
 
           // Increment the message index
           messageIndex++;
-
+          
           // Clear the message after 5 seconds
           setTimeout(function() {
             document.getElementById('message').textContent = "";
@@ -110,33 +94,33 @@
 
     // Function to handle button click event
     function handleClick() {
-      clearTimeout(clickTimeout); // Clear the click timeout
-
-      if (clickCount === 0) {
-        // First click
-        clickTimeout = setTimeout(function() {
-          waitingState = true;
-          document.getElementById('message').textContent = "...";
-          setTimeout(function() {
-            if (waitingState) {
-              document.getElementById('message').textContent = "What now?";
-            }
-          }, 2000); // Display "What now?" after 2 seconds of waiting
-        }, 2000); // Wait for 2 seconds before checking for further clicks
+      if (!buttonClicked) {
+        // Apply achievement effect
+        document.body.style.background = "linear-gradient(to right, red, orange, yellow, green, blue, indigo, violet)";
+        setTimeout(function() {
+          document.body.style.background = "";
+          // Display achievement message
+          document.getElementById('achievement-text').style.display = "block";
+          // Show the counter immediately after the button is clicked
+          document.getElementById('counter').style.display = "inline";
+          document.getElementById('message').style.display = "none";
+        }, 3000); // 3 seconds
+        buttonClicked = true;
       }
 
       clickCount++;
       document.getElementById('counter').textContent = clickCount;
 
-      // Show the counter immediately after the button is clicked
-      document.getElementById('counter').style.display = "inline";
-      document.getElementById('message').style.display = "none";
-
-      // Check if it's the first click
-      if (clickCount === 1) {
-        applyRainbowEffect();
-      } else if (clickCount > 1 && waitingState) {
-        waitingState = false;
+      if (waitingState) {
+        clearTimeout(waitingTimeout);
+      } else {
+        waitingState = true;
+        waitingTimeout = setTimeout(function() {
+          document.getElementById('message').textContent = "...";
+          setTimeout(function() {
+            document.getElementById('message').textContent = "What now?";
+          }, 2000); // 2 seconds
+        }, 2000); // 2 seconds
       }
     }
   </script>
@@ -145,7 +129,7 @@
   <div>
     <h1>The Button</h1>
     <div id="button-container">
-      <button id="button" onclick="this.clicked = true; handleClick()">Click me</button>
+      <button id="button" onclick="handleClick()">Click me</button>
       <div id="counter">0</div>
     </div>
     <div id="message"></div>
