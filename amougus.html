@@ -30,24 +30,14 @@
       font-weight: bold;
     }
 
-    .rainbow-background {
-      animation: rainbow 3s infinite;
-    }
-
-    @keyframes rainbow {
-      0% { background-color: red; }
-      14% { background-color: orange; }
-      28% { background-color: yellow; }
-      42% { background-color: green; }
-      57% { background-color: blue; }
-      71% { background-color: indigo; }
-      85% { background-color: violet; }
-      100% { background-color: red; }
+    #achievement-text {
+      display: none;
+      text-align: center;
+      font-size: 20px;
+      color: green;
     }
   </style>
   <script>
-    var clicked = false;
-
     // Function to display messages every 10 seconds
     function displayMessages() {
       var initialMessages = [
@@ -69,9 +59,9 @@
       var showingInitialMessages = true;
 
       // Display messages every 10 seconds
-      setInterval(function() {
+      var messageInterval = setInterval(function() {
         // Check if the button is clicked
-        if (!clicked) {
+        if (!document.getElementById('button').clicked) {
           // Check if it's been 1 minute and switch to replacement messages
           if (messageIndex === initialMessages.length) {
             showingInitialMessages = false;
@@ -98,19 +88,6 @@
 
     // Function to handle button click event
     function handleClick() {
-      if (!clicked) {
-        clicked = true;
-
-        // Add rainbow background class to the body for 3 seconds
-        document.body.classList.add('rainbow-background');
-        setTimeout(function() {
-          document.body.classList.remove('rainbow-background');
-        }, 3000); // 3 seconds
-
-        // Show the achievement message
-        document.getElementById('message').textContent = "Achievement Unlocked! - You clicked!";
-      }
-
       var clickCount = parseInt(document.getElementById('counter').textContent);
       clickCount++;
       document.getElementById('counter').textContent = clickCount;
@@ -118,6 +95,18 @@
       // Show the counter immediately after the button is clicked
       document.getElementById('counter').style.display = "inline";
       document.getElementById('message').style.display = "none";
+
+      // Check if it's the first click
+      if (clickCount === 1) {
+        // Apply achievement effect
+        document.body.style.backgroundImage = "linear-gradient(to right, red, orange, yellow, green, blue, indigo, violet)";
+        setTimeout(function() {
+          document.body.style.backgroundImage = "";
+        }, 3000); // 3 seconds
+
+        // Display achievement message
+        document.getElementById('achievement-text').style.display = "block";
+      }
     }
   </script>
 </head>
@@ -125,10 +114,11 @@
   <div>
     <h1>The Button</h1>
     <div id="button-container">
-      <button id="button" onclick="handleClick()">Click me</button>
+      <button id="button" onclick="this.clicked = true; handleClick()">Click me</button>
       <div id="counter">0</div>
     </div>
     <div id="message"></div>
   </div>
+  <div id="achievement-text">Achievement Unlocked! - You clicked!</div>
 </body>
 </html>
