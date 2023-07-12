@@ -1,41 +1,36 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Button Click Counter</title>
-    <style>
-        /* Center the button, text, and counter */
-        body {
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
+  <title>Button Example</title>
+  <script>
+    // Function to display messages every 10 seconds
+    function displayMessages() {
+      var messages = [
+        "Are you going to click it?",
+        "Are you not curious?",
+        "What do you think will happen?",
+        "Don't you wanna know?"
+      ];
+      
+      var messageIndex = 0;
+      
+      // Display messages every 10 seconds
+      setInterval(function() {
+        // Check if the button is clicked
+        if (!document.getElementById('button').clicked) {
+          // Display the message
+          var message = messages[messageIndex];
+          alert(message);
+          
+          // Increment the message index
+          messageIndex = (messageIndex + 1) % messages.length;
         }
-    </style>
+      }, 10000); // 10 seconds
+    }
+  </script>
 </head>
-<body>
-    <h1>The Button</h1>
-    <button onclick="incrementCounter()">Click Me</button>
-    <p>Clicked: <input type="number" id="counter" value="0" min="0" readonly></p>
-
-    <datalist id="achievementList">
-        <option value="Achievement unlocked - Why are you still here?" data-value="25"></option>
-    </datalist>
-
-    <script>
-        let count = parseInt(localStorage.getItem('clickCount')) || 0;
-        document.getElementById('counter').value = count;
-
-        function incrementCounter() {
-            count++;
-            document.getElementById('counter').value = count;
-            localStorage.setItem('clickCount', count.toString());
-
-            const achievementOption = document.querySelector('#achievementList option[data-value="' + count + '"]');
-            if (achievementOption) {
-                alert(achievementOption.value);
-            }
-        }
-    </script>
+<body onload="displayMessages()">
+  <h1>The Button</h1>
+  <button id="button" onclick="this.clicked = true;">Click me</button>
 </body>
 </html>
