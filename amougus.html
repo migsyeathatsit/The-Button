@@ -43,21 +43,20 @@
       ];
       
       var messageIndex = 0;
+      var showingInitialMessages = true;
       
       // Display messages every 10 seconds
       setInterval(function() {
         // Check if the button is clicked
         if (!document.getElementById('button').clicked) {
-          // Check if it's been 1 minute
-          if (messageIndex >= initialMessages.length && messageIndex < replacementMessages.length) {
-            // Display the replacement message
-            var message = replacementMessages[messageIndex];
-            document.getElementById('message').textContent = message;
-          } else {
-            // Display the initial message
-            var message = initialMessages[messageIndex % initialMessages.length];
-            document.getElementById('message').textContent = message;
+          // Check if it's been 1 minute and switch to replacement messages
+          if (messageIndex === initialMessages.length) {
+            showingInitialMessages = false;
           }
+          
+          // Display the appropriate message
+          var message = showingInitialMessages ? initialMessages[messageIndex] : replacementMessages[messageIndex - initialMessages.length];
+          document.getElementById('message').textContent = message;
 
           // Increment the message index
           messageIndex++;
