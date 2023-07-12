@@ -95,16 +95,8 @@
     // Function to handle button click event
     function handleClick() {
       if (!buttonClicked) {
-        // Apply achievement effect
-        document.body.style.background = "linear-gradient(to right, red, orange, yellow, green, blue, indigo, violet)";
-        setTimeout(function() {
-          document.body.style.background = "";
-          // Display achievement message
-          document.getElementById('achievement-text').style.display = "block";
-          // Show the counter immediately after the button is clicked
-          document.getElementById('counter').style.display = "inline";
-          document.getElementById('message').style.display = "none";
-        }, 3000); // 3 seconds
+        // Show the achievement message as an alert
+        alert("Achievement Unlocked! - You clicked!");
         buttonClicked = true;
       }
 
@@ -134,6 +126,5 @@
     </div>
     <div id="message"></div>
   </div>
-  <div id="achievement-text">Achievement Unlocked! - You clicked!</div>
 </body>
 </html>
