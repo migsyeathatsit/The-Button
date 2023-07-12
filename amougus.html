@@ -25,6 +25,7 @@
     }
 
     #counter {
+      display: none;
       text-align: center;
       margin-top: 10px;
     }
@@ -49,10 +50,9 @@
       
       var messageIndex = 0;
       var showingInitialMessages = true;
-      var clickCount = 0;
 
       // Display messages every 10 seconds
-      var messageInterval = setInterval(function() {
+      setInterval(function() {
         // Check if the button is clicked
         if (!document.getElementById('button').clicked) {
           // Check if it's been 1 minute and switch to replacement messages
@@ -72,8 +72,9 @@
             document.getElementById('message').textContent = "";
           }, 5000); // 5 seconds
         } else {
-          // Stop displaying messages
-          clearInterval(messageInterval);
+          // Show the counter and hide the message section
+          document.getElementById('counter').style.display = "block";
+          document.getElementById('message').style.display = "none";
         }
       }, 10000); // 10 seconds
     }
