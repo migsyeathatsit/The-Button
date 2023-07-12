@@ -18,15 +18,28 @@
       text-align: center;
       margin-top: 10px;
     }
+
+    #button-container {
+      display: flex;
+      justify-content: center;
+    }
   </style>
   <script>
     // Function to display messages every 10 seconds
     function displayMessages() {
-      var messages = [
+      var initialMessages = [
         "Are you going to click it?",
         "Are you not curious?",
         "What do you think will happen?",
         "Don't you wanna know?"
+      ];
+
+      var replacementMessages = [
+        "CLICK THE BUTTON",
+        "COME ON",
+        "THERE'S NOTHING WRONG WITH IT",
+        "WHY WON'T YOU CLICK IT",
+        "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
       ];
       
       var messageIndex = 0;
@@ -35,12 +48,19 @@
       setInterval(function() {
         // Check if the button is clicked
         if (!document.getElementById('button').clicked) {
-          // Display the message
-          var message = messages[messageIndex];
-          document.getElementById('message').textContent = message;
-          
+          // Check if it's been 1 minute
+          if (messageIndex >= initialMessages.length && messageIndex < replacementMessages.length) {
+            // Display the replacement message
+            var message = replacementMessages[messageIndex];
+            document.getElementById('message').textContent = message;
+          } else {
+            // Display the initial message
+            var message = initialMessages[messageIndex % initialMessages.length];
+            document.getElementById('message').textContent = message;
+          }
+
           // Increment the message index
-          messageIndex = (messageIndex + 1) % messages.length;
+          messageIndex++;
           
           // Clear the message after 5 seconds
           setTimeout(function() {
@@ -54,7 +74,9 @@
 <body onload="displayMessages()">
   <div>
     <h1>The Button</h1>
-    <button id="button" onclick="this.clicked = true;">Click me</button>
+    <div id="button-container">
+      <button id="button" onclick="this.clicked = true;">Click me</button>
+    </div>
     <div id="message"></div>
   </div>
 </body>
