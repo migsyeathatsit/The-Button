@@ -2,6 +2,23 @@
 <html>
 <head>
   <title>Button Example</title>
+  <style>
+    html, body {
+      height: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    h1 {
+      text-align: center;
+    }
+
+    #message {
+      text-align: center;
+      margin-top: 10px;
+    }
+  </style>
   <script>
     // Function to display messages every 10 seconds
     function displayMessages() {
@@ -20,17 +37,25 @@
         if (!document.getElementById('button').clicked) {
           // Display the message
           var message = messages[messageIndex];
-          alert(message);
+          document.getElementById('message').textContent = message;
           
           // Increment the message index
           messageIndex = (messageIndex + 1) % messages.length;
+          
+          // Clear the message after 5 seconds
+          setTimeout(function() {
+            document.getElementById('message').textContent = "";
+          }, 5000); // 5 seconds
         }
       }, 10000); // 10 seconds
     }
   </script>
 </head>
 <body onload="displayMessages()">
-  <h1>The Button</h1>
-  <button id="button" onclick="this.clicked = true;">Click me</button>
+  <div>
+    <h1>The Button</h1>
+    <button id="button" onclick="this.clicked = true;">Click me</button>
+    <div id="message"></div>
+  </div>
 </body>
 </html>
