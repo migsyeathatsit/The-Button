@@ -130,6 +130,46 @@
           waitingTimer = null;
         }
       }
+
+      // Check if clickCount is 25
+      if (clickCount === 25) {
+        // Display the new button
+        var dontClickButton = document.createElement('button');
+        dontClickButton.id = 'dont-click-button';
+        dontClickButton.textContent = "Don't click me";
+        dontClickButton.onclick = handleDontClickButton;
+        document.body.insertBefore(dontClickButton, document.getElementById('button-container'));
+
+        // Create the counter for the new button
+        var counter = document.createElement('div');
+        counter.id = 'counter-dont-click';
+        counter.textContent = '0';
+        document.body.insertBefore(counter, dontClickButton.nextSibling);
+      }
+    }
+
+    // Function to handle the new button click event
+    function handleDontClickButton() {
+      var dontClickCount = parseInt(document.getElementById('counter-dont-click').textContent);
+      dontClickCount++;
+      document.getElementById('counter-dont-click').textContent = dontClickCount;
+
+      // Teleport the button to a random position
+      var buttonContainer = document.getElementById('button-container');
+      var dontClickButton = document.getElementById('dont-click-button');
+      var buttonWidth = buttonContainer.clientWidth;
+      var buttonHeight = buttonContainer.clientHeight;
+      var screenWidth = window.innerWidth;
+      var screenHeight = window.innerHeight;
+      var randomLeft = Math.random() * (screenWidth - buttonWidth);
+      var randomTop = Math.random() * (screenHeight - buttonHeight);
+      dontClickButton.style.left = randomLeft + 'px';
+      dontClickButton.style.top = randomTop + 'px';
+
+      // Display the alert message
+      if (dontClickCount === 10) {
+        alert("Achievement Unlocked! - You shouldn't have clicked.");
+      }
     }
   </script>
 </head>
