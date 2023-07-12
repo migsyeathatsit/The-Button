@@ -23,6 +23,11 @@
       display: flex;
       justify-content: center;
     }
+
+    #counter {
+      text-align: center;
+      margin-top: 10px;
+    }
   </style>
   <script>
     // Function to display messages every 10 seconds
@@ -41,50 +46,43 @@
         "WHY WON'T YOU CLICK IT",
         "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
       ];
-
+      
       var messageIndex = 0;
       var showingInitialMessages = true;
       var clickCount = 0;
 
       // Display messages every 10 seconds
-      setInterval(function() {
+      var messageInterval = setInterval(function() {
         // Check if the button is clicked
         if (!document.getElementById('button').clicked) {
           // Check if it's been 1 minute and switch to replacement messages
           if (messageIndex === initialMessages.length) {
             showingInitialMessages = false;
-            document.getElementById('counter').textContent = "Click Count: " + clickCount;
           }
-
+          
           // Display the appropriate message
           var message = showingInitialMessages ? initialMessages[messageIndex] : replacementMessages[messageIndex - initialMessages.length];
-
-          // Special case when displaying FINALLY message
-          if (!showingInitialMessages && message === "CLICK THE BUTTON") {
-            message = "FINALLY";
-          }
-
           document.getElementById('message').textContent = message;
 
           // Increment the message index
           messageIndex++;
-
+          
           // Clear the message after 5 seconds
           setTimeout(function() {
             document.getElementById('message').textContent = "";
           }, 5000); // 5 seconds
+        } else {
+          // Stop displaying messages
+          clearInterval(messageInterval);
         }
       }, 10000); // 10 seconds
+    }
 
-      // Function to handle button click event
-      function handleClick() {
-        // Increment the click count
-        clickCount++;
-
-        // Show the click count and FINALLY message
-        document.getElementById('counter').textContent = "Click Count: " + clickCount;
-        document.getElementById('message').textContent = "FINALLY";
-      }
+    // Function to handle button click event
+    function handleClick() {
+      var clickCount = parseInt(document.getElementById('counter').textContent);
+      clickCount++;
+      document.getElementById('counter').textContent = clickCount;
     }
   </script>
 </head>
@@ -94,8 +92,8 @@
     <div id="button-container">
       <button id="button" onclick="this.clicked = true; handleClick()">Click me</button>
     </div>
-    <div id="counter"></div>
     <div id="message"></div>
+    <div id="counter">0</div>
   </div>
 </body>
 </html>
