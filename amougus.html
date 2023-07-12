@@ -41,10 +41,11 @@
         "WHY WON'T YOU CLICK IT",
         "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
       ];
-      
+
       var messageIndex = 0;
       var showingInitialMessages = true;
-      
+      var clickCount = 0;
+
       // Display messages every 10 seconds
       setInterval(function() {
         // Check if the button is clicked
@@ -52,21 +53,38 @@
           // Check if it's been 1 minute and switch to replacement messages
           if (messageIndex === initialMessages.length) {
             showingInitialMessages = false;
+            document.getElementById('counter').textContent = "Click Count: " + clickCount;
           }
-          
+
           // Display the appropriate message
           var message = showingInitialMessages ? initialMessages[messageIndex] : replacementMessages[messageIndex - initialMessages.length];
+
+          // Special case when displaying FINALLY message
+          if (!showingInitialMessages && message === "CLICK THE BUTTON") {
+            message = "FINALLY";
+          }
+
           document.getElementById('message').textContent = message;
 
           // Increment the message index
           messageIndex++;
-          
+
           // Clear the message after 5 seconds
           setTimeout(function() {
             document.getElementById('message').textContent = "";
           }, 5000); // 5 seconds
         }
       }, 10000); // 10 seconds
+
+      // Function to handle button click event
+      function handleClick() {
+        // Increment the click count
+        clickCount++;
+
+        // Show the click count and FINALLY message
+        document.getElementById('counter').textContent = "Click Count: " + clickCount;
+        document.getElementById('message').textContent = "FINALLY";
+      }
     }
   </script>
 </head>
@@ -74,8 +92,9 @@
   <div>
     <h1>The Button</h1>
     <div id="button-container">
-      <button id="button" onclick="this.clicked = true;">Click me</button>
+      <button id="button" onclick="this.clicked = true; handleClick()">Click me</button>
     </div>
+    <div id="counter"></div>
     <div id="message"></div>
   </div>
 </body>
