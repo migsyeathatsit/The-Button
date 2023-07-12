@@ -109,17 +109,20 @@
         clickCount++;
         document.getElementById('counter').textContent = clickCount;
         
-        // Add teleport animation class to the counter
+        // Add teleport animation class to the button and counter
+        document.getElementById('dont-click-button').classList.add('teleport');
         document.getElementById('counter').classList.add('teleport');
 
         // Generate random teleport coordinates
         var maxTranslate = 200; // Maximum translation in pixels
         var translateX = Math.floor(Math.random() * maxTranslate) - maxTranslate / 2;
         var translateY = Math.floor(Math.random() * maxTranslate) - maxTranslate / 2;
+        document.getElementById('dont-click-button').style.transform = 'translate(' + translateX + 'px, ' + translateY + 'px)';
         document.getElementById('counter').style.transform = 'translate(' + translateX + 'px, ' + translateY + 'px)';
 
         // Remove teleport animation class after 1 second
         setTimeout(function() {
+          document.getElementById('dont-click-button').classList.remove('teleport');
           document.getElementById('counter').classList.remove('teleport');
         }, 1000); // 1 second
       });
@@ -131,7 +134,7 @@
     <h1>The Button</h1>
     <div id="button-container">
       <button id="button" onclick="this.clicked = true;">Click me</button>
-      <button id="dont-click-button">Don't Click Me</button>
+      <div id="dont-click-button">Don't Click Me</div>
       <div id="counter">0</div>
     </div>
     <div id="message"></div>
