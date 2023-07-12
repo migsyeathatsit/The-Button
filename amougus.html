@@ -22,12 +22,20 @@
     #button-container {
       display: flex;
       justify-content: center;
+      position: relative;
     }
 
     #counter {
       display: none;
       margin-left: 10px;
       font-weight: bold;
+    }
+
+    #dont-click-button {
+      display: none;
+      position: absolute;
+      top: 0;
+      left: 0;
     }
 
     .teleport {
@@ -86,6 +94,12 @@
           // Show the counter and hide the message section
           document.getElementById('counter').style.display = "inline";
           document.getElementById('message').style.display = "none";
+
+          // Check if the counter reaches 25
+          if (clickCount === 25) {
+            // Display the "Don't Click Me" button
+            document.getElementById('dont-click-button').style.display = "block";
+          }
         }
       }, 10000); // 10 seconds
 
