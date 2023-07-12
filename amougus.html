@@ -29,6 +29,16 @@
       margin-left: 10px;
       font-weight: bold;
     }
+
+    .teleport {
+      animation: teleport 1s;
+    }
+
+    @keyframes teleport {
+      0% { transform: translate(0, 0); }
+      50% { transform: translate(-100px, -100px); }
+      100% { transform: translate(0, 0); }
+    }
   </style>
   <script>
     // Function to display messages every 10 seconds
@@ -50,9 +60,10 @@
       
       var messageIndex = 0;
       var showingInitialMessages = true;
+      var clickCount = 0;
 
       // Display messages every 10 seconds
-      setInterval(function() {
+      var messageInterval = setInterval(function() {
         // Check if the button is clicked
         if (!document.getElementById('button').clicked) {
           // Check if it's been 1 minute and switch to replacement messages
@@ -77,17 +88,27 @@
           document.getElementById('message').style.display = "none";
         }
       }, 10000); // 10 seconds
-    }
 
-    // Function to handle button click event
-    function handleClick() {
-      var clickCount = parseInt(document.getElementById('counter').textContent);
-      clickCount++;
-      document.getElementById('counter').textContent = clickCount;
-      
-      // Show the counter immediately after the button is clicked
-      document.getElementById('counter').style.display = "inline";
-      document.getElementById('message').style.display = "none";
+      // Function to handle "Don't Click Me" button click event
+      document.getElementById('dont-click-button').addEventListener('click', function() {
+        // Increment the counter
+        clickCount++;
+        document.getElementById('counter').textContent = clickCount;
+        
+        // Add teleport animation class to the counter
+        document.getElementById('counter').classList.add('teleport');
+
+        // Generate random teleport coordinates
+        var maxTranslate = 200; // Maximum translation in pixels
+        var translateX = Math.floor(Math.random() * maxTranslate) - maxTranslate / 2;
+        var translateY = Math.floor(Math.random() * maxTranslate) - maxTranslate / 2;
+        document.getElementById('counter').style.transform = 'translate(' + translateX + 'px, ' + translateY + 'px)';
+
+        // Remove teleport animation class after 1 second
+        setTimeout(function() {
+          document.getElementById('counter').classList.remove('teleport');
+        }, 1000); // 1 second
+      });
     }
   </script>
 </head>
@@ -95,7 +116,8 @@
   <div>
     <h1>The Button</h1>
     <div id="button-container">
-      <button id="button" onclick="this.clicked = true; handleClick()">Click me</button>
+      <button id="button" onclick="this.clicked = true;">Click me</button>
+      <button id="dont-click-button">Don't Click Me</button>
       <div id="counter">0</div>
     </div>
     <div id="message"></div>
