@@ -16,7 +16,8 @@
 
     #message {
       text-align: center;
-      margin-top: 10px;
+      font-size: 48px;
+      margin-bottom: 20px;
     }
 
     #button-container {
@@ -101,12 +102,12 @@
 </head>
 <body onload="displayMessages()">
   <div>
+    <div id="message"></div>
     <h1>The Button</h1>
     <div id="button-container">
       <button id="button" onclick="this.clicked = true; handleClick()">Click me</button>
       <div id="counter">0</div>
     </div>
-    <div id="message"></div>
   </div>
 </body>
 </html>
