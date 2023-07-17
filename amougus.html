@@ -30,10 +30,11 @@
       font-weight: bold;
     }
 
-    #achievements-button {
-      position: absolute;
-      top: 10px;
-      left: 10px;
+    #achievement-text {
+      display: none;
+      text-align: center;
+      font-size: 20px;
+      color: green;
     }
   </style>
   <script>
@@ -42,7 +43,6 @@
     var buttonClicked = false;
     var waitingState = false;
     var waitingTimeout;
-    var achievedAchievements = [];
 
     // Function to display messages every 10 seconds
     function displayMessages() {
@@ -96,21 +96,12 @@
     function handleClick() {
       if (!buttonClicked) {
         // Show the achievement message as an alert
-        alert("Achievement Unlocked! - You clicked!");
+        alert("Achievement Unlocked! - You Clicked!");
         buttonClicked = true;
       }
 
       clickCount++;
       document.getElementById('counter').textContent = clickCount;
-
-      if (clickCount === 2100) {
-        // Check if the achievement is already achieved
-        if (!achievedAchievements.includes("Why are you still here?")) {
-          // Show the achievement message as an alert
-          alert("Achievement Unlocked! - Why are you still here?");
-          achievedAchievements.push("Why are you still here?");
-        }
-      }
 
       if (waitingState) {
         clearTimeout(waitingTimeout);
@@ -125,10 +116,24 @@
       }
     }
 
-    // Function to handle achievements button click event
+    // Function to display achieved achievements
     function showAchievements() {
-      var achievedAchievementsText = achievedAchievements.length > 0 ? "- " + achievedAchievements.join("\n- ") : "No achieved achievements yet.";
-      alert("Achievements:\n\n" + achievedAchievementsText);
+      var achievements = [];
+      if (clickCount >= 2100) {
+        achievements.push("Why are you still here?");
+      }
+      if (buttonClicked) {
+        achievements.push("You Clicked!");
+      }
+
+      var message = "Achievements:\n";
+      if (achievements.length > 0) {
+        message += "- " + achievements.join("\n- ");
+      } else {
+        message += "No achievements unlocked yet.";
+      }
+      
+      alert(message);
     }
   </script>
 </head>
