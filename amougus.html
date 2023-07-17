@@ -36,6 +36,12 @@
       font-size: 20px;
       color: green;
     }
+
+    #achievements-button {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+    }
   </style>
   <script>
     // Variables
@@ -120,6 +126,11 @@
         }, 2000); // 2 seconds
       }
     }
+
+    // Function to handle achievements button click event
+    function showAchievements() {
+      alert("You have achieved the following:\n\n- Achievement 1\n- Achievement 2\n- Achievement 3");
+    }
   </script>
 </head>
 <body onload="displayMessages()">
@@ -131,5 +142,6 @@
     </div>
     <div id="message"></div>
   </div>
+  <button id="achievements-button" onclick="showAchievements()">Achievements</button>
 </body>
 </html>
