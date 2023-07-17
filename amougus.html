@@ -30,13 +30,6 @@
       font-weight: bold;
     }
 
-    #achievement-text {
-      display: none;
-      text-align: center;
-      font-size: 20px;
-      color: green;
-    }
-
     #achievements-button {
       position: absolute;
       top: 10px;
@@ -49,6 +42,7 @@
     var buttonClicked = false;
     var waitingState = false;
     var waitingTimeout;
+    var achievedAchievements = [];
 
     // Function to display messages every 10 seconds
     function displayMessages() {
@@ -110,8 +104,12 @@
       document.getElementById('counter').textContent = clickCount;
 
       if (clickCount === 2100) {
-        // Show the achievement message as an alert
-        alert("Achievement Unlocked! - Why are you still here");
+        // Check if the achievement is already achieved
+        if (!achievedAchievements.includes("Why are you still here?")) {
+          // Show the achievement message as an alert
+          alert("Achievement Unlocked! - Why are you still here?");
+          achievedAchievements.push("Why are you still here?");
+        }
       }
 
       if (waitingState) {
@@ -129,7 +127,8 @@
 
     // Function to handle achievements button click event
     function showAchievements() {
-      alert("You have achieved the following:\n\n- Achievement 1\n- Achievement 2\n- Achievement 3");
+      var achievedAchievementsText = achievedAchievements.length > 0 ? "- " + achievedAchievements.join("\n- ") : "No achieved achievements yet.";
+      alert("Achievements:\n\n" + achievedAchievementsText);
     }
   </script>
 </head>
