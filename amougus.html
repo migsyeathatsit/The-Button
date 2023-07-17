@@ -103,6 +103,11 @@
       clickCount++;
       document.getElementById('counter').textContent = clickCount;
 
+      if (clickCount === 2100) {
+        // Show the achievement message as an alert
+        alert("Achievement Unlocked! - Why are you still here");
+      }
+
       if (waitingState) {
         clearTimeout(waitingTimeout);
       } else {
