@@ -8,8 +8,6 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      background-repeat: no-repeat;
-      background-size: cover;
     }
 
     h1 {
@@ -39,10 +37,8 @@
       color: green;
     }
 
-    #achievements-button {
-      position: absolute;
-      top: 10px;
-      left: 10px;
+    #secret-button {
+      display: none;
     }
   </style>
   <script>
@@ -68,7 +64,7 @@
         "WHY WON'T YOU CLICK IT",
         "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
       ];
-      
+
       var messageIndex = 0;
       var showingInitialMessages = true;
 
@@ -80,14 +76,14 @@
           if (messageIndex === initialMessages.length) {
             showingInitialMessages = false;
           }
-          
+
           // Display the appropriate message
           var message = showingInitialMessages ? initialMessages[messageIndex] : replacementMessages[messageIndex - initialMessages.length];
           document.getElementById('message').textContent = message;
 
           // Increment the message index
           messageIndex++;
-          
+
           // Clear the message after 5 seconds
           setTimeout(function() {
             document.getElementById('message').textContent = "";
@@ -111,6 +107,11 @@
       clickCount++;
       document.getElementById('counter').textContent = clickCount;
 
+      if (clickCount === 500) {
+        // Show the secret button
+        document.getElementById('secret-button').style.display = "block";
+      }
+
       if (waitingState) {
         clearTimeout(waitingTimeout);
       } else {
@@ -122,37 +123,11 @@
           }, 2000); // 2 seconds
         }, 2000); // 2 seconds
       }
-
-      if (clickCount === 500) {
-        // Display the flowers image for 1 second
-        document.body.style.backgroundImage = "url('flowers.jpg')";
-        setTimeout(function() {
-          document.body.style.backgroundImage = "";
-        }, 1000); // 1 second
-
-        // Show the achievement message as an alert
-        alert("Achievement Unlocked! - What the hell");
-      }
     }
 
-    // Function to display achieved achievements
-    function showAchievements() {
-      var achievements = [];
-      if (clickCount >= 2100) {
-        achievements.push("Why are you still here?");
-      }
-      if (buttonClicked) {
-        achievements.push("You Clicked!");
-      }
-
-      var message = "Achievements:\n";
-      if (achievements.length > 0) {
-        message += "- " + achievements.join("\n- ");
-      } else {
-        message += "No achievements unlocked yet.";
-      }
-      
-      alert(message);
+    // Function to handle secret button click event
+    function handleSecretClick() {
+      window.location.href = "https://example.com"; // Replace with the desired website URL
     }
   </script>
 </head>
@@ -165,6 +140,6 @@
     </div>
     <div id="message"></div>
   </div>
-  <button id="achievements-button" onclick="showAchievements()">Achievements</button>
+  <button id="secret-button" onclick="handleSecretClick()">Secret</button>
 </body>
 </html>
