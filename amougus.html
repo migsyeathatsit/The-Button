@@ -39,8 +39,14 @@
 
     #secret-button {
       display: none;
-      position: absolute;
+      position: fixed;
       bottom: 10px;
+      left: 10px;
+    }
+
+    #achievements-button {
+      position: fixed;
+      top: 10px;
       left: 10px;
     }
   </style>
@@ -136,7 +142,27 @@
 
     // Function to handle secret button click event
     function handleSecretClick() {
-      window.location.href = "https://migsyeathatsit.github.io/The-Button/82479.html"; // Replace with the desired website URL
+      window.location.href = "https://example.com"; // Replace with the desired website URL
+    }
+
+    // Function to display achieved achievements
+    function showAchievements() {
+      var achievements = [];
+      if (clickCount >= 2100) {
+        achievements.push("Why are you still here?");
+      }
+      if (buttonClicked) {
+        achievements.push("You Clicked!");
+      }
+
+      var message = "Achievements:\n";
+      if (achievements.length > 0) {
+        message += "- " + achievements.join("\n- ");
+      } else {
+        message += "No achievements unlocked yet.";
+      }
+
+      alert(message);
     }
   </script>
 </head>
@@ -149,6 +175,7 @@
     </div>
     <div id="message"></div>
   </div>
+  <button id="achievements-button" onclick="showAchievements()">Achievements</button>
   <button id="secret-button" onclick="handleSecretClick()">Secret</button>
 </body>
 </html>
